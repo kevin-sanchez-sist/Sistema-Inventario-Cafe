@@ -2,12 +2,12 @@ using ProyectoInventario.models;
 
 namespace ProyectoInventario.services
 {
-    public interface ICategoriaService
+    public interface IVentaService
     {
-        void Add(Categoria categoria);
-        void Update(Categoria categoria);
+        void Add(Venta venta);
+        void Update(Venta venta);
         void Delete(int id);
-        Categoria GetById(int id);
-        List<Categoria> GetAll();
+        Venta GetById(int id);
+        List<Venta> GetAll();
     }
 }
