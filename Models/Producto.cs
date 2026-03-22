@@ -2,30 +2,19 @@ namespace ProyectoInventario.models
 {
     public abstract class Producto
     {
-        private int id;
+        public Guid Id {get; private set;}
         private string nombre;
         private decimal precio;
         private int stock;
         private EstadoProducto estado;
         private Categoria? categoria;
 
-        public Producto (int id, string nombre, decimal precio, int stock)
+        public Producto (string nombre, decimal precio, int stock)
         {
-            if (String.IsNullOrWhiteSpace(nombre))
-                throw new ArgumentException("El nombre del producto no puede estar vacio.");
-            if (precio <= 0)
-                throw new ArgumentException("El precio debe ser mayor a cero.");
-
-            this.id = id;
             this.nombre = nombre;
             this.precio = precio;
             this.stock = stock;
-            this.estado = EstadoProducto.Activo;
-        }
-
-        public int Id
-        {
-            get { return id; }
+            this.estado = EstadoProducto.Activo;  
         }
 
         public string Nombre
@@ -57,9 +46,6 @@ namespace ProyectoInventario.models
 
         public void AgregarStock(int cantidad)
         {
-            if (cantidad <=0)
-                throw new ArgumentException("La cantidad debe ser mayor a cero.");
-
             stock += cantidad;
         }
 
@@ -74,26 +60,12 @@ namespace ProyectoInventario.models
 
         protected void ActualizarPrecio(decimal nuevoPrecio)
         {
-            if (nuevoPrecio <= 0)
-                throw new ArgumentException("El precio debe ser mayor a cero.");
-
             precio = nuevoPrecio;
         }
 
         public void AsignarCategoria(Categoria categoria)
-        {
-            if (categoria == null)
-                throw new ArgumentException("La categoría no puede ser nula.");
-            
+        {            
             this.categoria = categoria;
-        }
-
-        public virtual void MostrarInformacion()
-        {
-            Console.WriteLine($"Nombre: {Nombre}");
-            Console.WriteLine($"Precio: {precio}");
-            Console.WriteLine($"Stock: {stock}");
-            Console.WriteLine($"Estado: {estado}");
         }
     }
 }

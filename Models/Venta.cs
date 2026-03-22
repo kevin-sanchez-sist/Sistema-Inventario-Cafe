@@ -2,18 +2,14 @@ namespace ProyectoInventario.models
 {
     public class Venta
     {
-        public int Id {get; set;}
+        public Guid Id {get; private set;}
         private DateTime fecha;
         private EstadoVenta estadoVenta;
-        private Empleado vendedor;
+        private Usuario vendedor;
         private List<DetalleVenta> detalles;
 
-        public Venta(int id, Empleado vendedor)
+        public Venta(Usuario vendedor)
         {
-            if (vendedor == null)
-                throw new ArgumentException("La venta debe tener un vendedor");
-
-            this.Id = id;
             this.vendedor = vendedor;
             this.fecha = DateTime.Now;
             this.estadoVenta = EstadoVenta.Pendiente;
@@ -30,7 +26,7 @@ namespace ProyectoInventario.models
             get { return estadoVenta; }
         }
 
-        public Empleado Vendedor
+        public Usuario Vendedor
         {
             get {return vendedor; }
         }

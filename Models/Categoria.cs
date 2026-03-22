@@ -4,24 +4,15 @@ namespace ProyectoInventario.models
 {
     public class Categoria
     {
-        private int id;
+        public Guid Id {get; private set;}
         private string nombre;
 
         private List <Producto> productos;
 
-        public Categoria(string nombre, int id)
+        public Categoria(string nombre)
         {
-             if (string.IsNullOrWhiteSpace(nombre))
-                throw new ArgumentException("El nombre de la categoría no puede estar vacío.");
-
-            this.id = id;
             this.nombre = nombre;
             this.productos = new List<Producto>();
-        }
-
-        public int Id
-        {
-            get { return id; }
         }
 
         public string Nombre

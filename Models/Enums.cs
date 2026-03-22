@@ -6,10 +6,16 @@ namespace ProyectoInventario.models
         Activo
     }
 
+    public enum TipoProducto
+    {
+        ProductoCafe,
+        ProductoDulce
+    }
+
     public enum RolUsuario
     {
         Admin = 1,
-        Vendedor = 2
+        Empleado = 2
     }
 
     public enum EstadoVenta
