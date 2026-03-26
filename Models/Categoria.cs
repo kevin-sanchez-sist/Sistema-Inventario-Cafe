@@ -2,9 +2,8 @@ using System.Data;
 
 namespace ProyectoInventario.models
 {
-    public class Categoria
+    public class Categoria : BaseEntity
     {
-        public Guid Id {get; private set;}
         private string nombre;
 
         private List <Producto> productos;

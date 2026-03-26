@@ -1,8 +1,7 @@
 namespace ProyectoInventario.models
 {
-    public abstract class Usuario
+    public abstract class Usuario : BaseEntity
     {
-        public Guid Id {get; private set;}
         private string nombre;
         private string email;
         private string password;

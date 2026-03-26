@@ -2,7 +2,6 @@ namespace ProyectoInventario.models
 {
     public class DetalleVenta
     {
-        public Guid Id { get; private set;}
         private Producto producto;
         private int cantidad;
         private decimal precioUnitario;

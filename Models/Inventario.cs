@@ -1,8 +1,7 @@
 namespace ProyectoInventario.models
 {
-    public class Inventario
+    public class Inventario : BaseEntity
     {
-        public Guid Id { get; private set;}
         private Producto producto;
         private TipoMovimiento tipo;
         private int cantidad;

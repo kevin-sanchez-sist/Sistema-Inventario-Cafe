@@ -1,8 +1,7 @@
 namespace ProyectoInventario.models
 {
-    public abstract class Producto
+    public abstract class Producto : BaseEntity
     {
-        public Guid Id {get; private set;}
         private string nombre;
         private decimal precio;
         private int stock;
@@ -58,7 +57,7 @@ namespace ProyectoInventario.models
             return true;
         }
 
-        protected void ActualizarPrecio(decimal nuevoPrecio)
+        public void ActualizarPrecio(decimal nuevoPrecio)
         {
             precio = nuevoPrecio;
         }

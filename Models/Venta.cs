@@ -1,8 +1,7 @@
 namespace ProyectoInventario.models
 {
-    public class Venta
+    public class Venta : BaseEntity
     {
-        public Guid Id {get; private set;}
         private DateTime fecha;
         private EstadoVenta estadoVenta;
         private Usuario vendedor;
