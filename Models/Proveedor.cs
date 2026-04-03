@@ -34,5 +34,12 @@ namespace ProyectoInventario.models
         {
             get { return ciudad; }
         }
+
+        public void ActualizarContacto(string? telefono, string? email, string? ciudad)
+        {
+            if (telefono != null) this.telefono = telefono;
+            if (email != null) this.email = email;
+            if (ciudad != null) this.ciudad = ciudad;
+        }
     }
 }

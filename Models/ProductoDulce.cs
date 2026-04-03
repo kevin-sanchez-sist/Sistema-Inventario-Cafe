@@ -4,8 +4,8 @@ namespace ProyectoInventario.models
     {
         private string sabor;
 
-        public ProductoDulce(string nombre, decimal precio, int stock, string sabor) 
-            : base(nombre, precio, stock)
+        public ProductoDulce(string nombre, decimal precio, int stock, string sabor, decimal costo) 
+            : base(nombre, precio, stock, costo)
         {
             this.sabor = sabor;
         }
