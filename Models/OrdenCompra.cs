@@ -29,5 +29,30 @@ namespace ProyectoInventario.models
         {
             get { return proveedor; }
         }
+
+        public List<DetalleOrdenCompra> Detalles
+        {
+            get { return detalles; }
+        }
+
+        public void AgregarDetalle(DetalleOrdenCompra detalle)
+        {
+            detalles.Add(detalle);
+        }
+
+        public bool Recibir()
+        {
+            if (estado != EstadoOrden.Pendiente) return false;
+            estado = EstadoOrden.Recibida;
+            return true;
+        }
+
+        public decimal CalcularTotal()
+        {
+            decimal total = 0;
+            foreach (var d in detalles)
+                total += d.CostoUnitario * d.Cantidad;
+            return total;
+        }
     }
 }

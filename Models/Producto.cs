@@ -7,12 +7,14 @@ namespace ProyectoInventario.models
         private int stock;
         private EstadoProducto estado;
         private Categoria? categoria;
+        private decimal costoPromedio;
 
-        public Producto (string nombre, decimal precio, int stock)
+        public Producto (string nombre, decimal precio, int stock, decimal costo)
         {
             this.nombre = nombre;
             this.precio = precio;
             this.stock = stock;
+            this.costoPromedio = costo;
             this.estado = EstadoProducto.Activo;  
         }
 
@@ -43,6 +45,11 @@ namespace ProyectoInventario.models
             get { return categoria; }
         }
 
+        public decimal CostoPromedio
+        {
+            get { return costoPromedio; }
+        }
+
         public void AgregarStock(int cantidad)
         {
             stock += cantidad;
@@ -60,6 +67,16 @@ namespace ProyectoInventario.models
         public void ActualizarPrecio(decimal nuevoPrecio)
         {
             precio = nuevoPrecio;
+        }
+
+        public void ActualizarCostoPromedio(int cantidadEntrante, decimal costoNuevo)
+        {
+            if (stock == 0)
+            {
+                costoPromedio = costoNuevo;
+                return;
+            }
+            costoPromedio = ((stock * costoPromedio) + (cantidadEntrante * costoNuevo)) / (stock + cantidadEntrante);
         }
 
         public void AsignarCategoria(Categoria categoria)

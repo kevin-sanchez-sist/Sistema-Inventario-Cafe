@@ -37,4 +37,11 @@ namespace ProyectoInventario.models
         Recibida = 2,
         Cancelada = 3
     }
+
+    public enum OrigenMovimiento
+    {
+        Compra = 1,
+        Venta = 2,
+        AjusteManual = 3
+    }
 }

@@ -30,5 +30,31 @@ namespace ProyectoInventario.models
             get {return vendedor; }
         }
 
+        public List<DetalleVenta> Detalles
+        {
+            get { return detalles; }
+        }
+
+        public void AgregarDetalle(DetalleVenta detalle)
+        {
+            detalles.Add(detalle);
+        }
+
+        public void Completar()
+        {
+            estadoVenta = EstadoVenta.Completada;
+        }
+
+        public decimal Total
+        {
+            get
+            {
+                decimal total = 0;
+                foreach (var d in detalles)
+                    total += d.Subtotal;
+                return total;
+            }
+        }
+
     }
 }

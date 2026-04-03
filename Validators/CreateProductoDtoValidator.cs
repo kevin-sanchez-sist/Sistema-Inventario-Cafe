@@ -13,6 +13,12 @@ public class CreateProductoDtoValidator : AbstractValidator<CreateProductoDto>
         RuleFor(x => x.Precio)
             .GreaterThanOrEqualTo(0)
             .WithMessage("El precio del producto no puede ser negativo.");
+
+        RuleFor(x => x.CostoInicial)
+            .NotNull()
+            .WithMessage("El costo inicial del producto es obligatorio.")
+            .GreaterThan(0)
+            .WithMessage("El costo inicial debe ser mayor a cero.");
         
         RuleFor(x => x.Stock)
             .GreaterThanOrEqualTo(0)
