@@ -1,16 +1,18 @@
 namespace ProyectoInventario.models
 {
-    public abstract class Usuario : BaseEntity
+    public class Usuario : BaseEntity
     {
         private string nombre;
         private string email;
         private string password;
+        private RolUsuario rol;
 
-        public Usuario(string nombre, string email, string password)
+        public Usuario(string nombre, string email, string password, RolUsuario rol)
         {
             this.nombre = nombre;
             this.email = email;
             this.password = password;
+            this.rol = rol;
         }
 
         public string Nombre
@@ -21,6 +23,16 @@ namespace ProyectoInventario.models
         public string Email
         {
             get { return email; }
+        }
+
+        public string Password
+        {
+            get { return password; }
+        }
+
+        public RolUsuario Rol
+        {
+            get { return rol; }
         }
     }
 }
