@@ -30,4 +30,11 @@ namespace ProyectoInventario.models
         Entrada = 1,
         Salida = 2
     }
+
+    public enum EstadoOrden
+    {
+        Pendiente = 1,
+        Recibida = 2,
+        Cancelada = 3
+    }
 }
