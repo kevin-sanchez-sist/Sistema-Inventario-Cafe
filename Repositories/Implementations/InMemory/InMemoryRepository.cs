@@ -2,7 +2,7 @@ using ProyectoInventario.repositories;
 
 public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
 {
-    private readonly List<T> _data = new List<T>();
+    protected readonly List<T> _data = new List<T>();
 
     void IRepository<T>.Add(T entity)
     {

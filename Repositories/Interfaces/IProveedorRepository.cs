@@ -4,6 +4,6 @@ namespace ProyectoInventario.repositories
 {
     public interface IProveedorRepository : IRepository<Proveedor>
     {
-        Proveedor? GetByCity(string city);
+        List<Proveedor> GetByCity(string city);
     }
 }

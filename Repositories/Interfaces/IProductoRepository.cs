@@ -6,6 +6,6 @@ namespace ProyectoInventario.repositories
     {
         List<Producto> GetByCategoria(Guid CategoriaId);
         List<Producto> GetByDisponibilidad(EstadoProducto Estado);
-        List<Producto> GetBajoStock(int limite);
+        List<Producto> GetBajoStock(int umbral);
     }
 }
