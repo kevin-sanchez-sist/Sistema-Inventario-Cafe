@@ -45,6 +45,11 @@ namespace ProyectoInventario.models
             estadoVenta = EstadoVenta.Completada;
         }
 
+        public void Cancelar()
+        {
+            estadoVenta = EstadoVenta.Cancelada;
+        }
+
         public decimal Total
         {
             get

@@ -83,5 +83,10 @@ namespace ProyectoInventario.models
         {            
             this.categoria = categoria;
         }
+
+        public void ActualizarEstado(EstadoProducto nuevoEstado)
+        {
+            this.estado = nuevoEstado;
+        }
     }
 }

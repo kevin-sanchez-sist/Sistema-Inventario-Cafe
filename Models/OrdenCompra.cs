@@ -15,7 +15,7 @@ namespace ProyectoInventario.models
             this.detalles = new List<DetalleOrdenCompra>();
         }
 
-         public DateTime Fecha
+        public DateTime Fecha
         {
             get { return fecha; }
         }

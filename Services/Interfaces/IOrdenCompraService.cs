@@ -10,6 +10,7 @@ namespace ProyectoInventario.services
         OrdenCompraResponseDto GetById(Guid id);
         List<OrdenCompraResponseDto> GetAll();
         List<OrdenCompraResponseDto> GetByRangoFechas(DateTime inicio, DateTime fin);
+        List<OrdenCompraResponseDto> GetByStatus(EstadoOrden estado);
         
     }
 }
