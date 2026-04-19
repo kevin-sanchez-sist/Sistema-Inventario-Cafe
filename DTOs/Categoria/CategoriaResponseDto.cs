@@ -1,4 +1,6 @@
 public class CategoriaResponseDto
 {
-    public string? Nombre { get; set;}
+    public Guid Id { get; set; }
+    public string? Nombre { get; set; }
+    public int ProductosActivos { get; set; }
 }

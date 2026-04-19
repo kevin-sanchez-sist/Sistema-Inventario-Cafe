@@ -15,6 +15,12 @@ namespace ProyectoInventario.models
             this.rol = rol;
         }
 
+        public void ActualizarInformacion(string? email, string? password)
+        {
+            if (email != null) this.email = email;
+            if (password != null) this.password = password;
+        }
+
         public string Nombre
         {
             get { return nombre; }

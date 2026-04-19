@@ -1,5 +1,7 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using ProyectoInventario.repositories;
+using ProyectoInventario.services;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +12,20 @@ builder.Services.AddControllers();
 builder.Services.AddFluentValidationAutoValidation();
     builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+
+builder.Services.AddSingleton<ICategoriaRepository, InMemoryCategoriaRepository>();
+
+builder.Services.AddSingleton<IInventarioRepository, InMemoryInventarioRepository>();
+
+builder.Services.AddSingleton<IOrdenCompraRepository, InMemoryOrdenCompraRepository>();
+
+builder.Services.AddSingleton<IProductoRepository, InMemoryProductoRepository>();
+
+builder.Services.AddSingleton<IProveedorRepository, InMemoryProveedorRepository>();
+
+builder.Services.AddSingleton<IUsuarioRepository, InMemoryUsuarioRepository>();
+
+builder.Services.AddSingleton<IVentaRepository, InMemoryVentaRepository>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
