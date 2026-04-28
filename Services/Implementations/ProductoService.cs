@@ -63,6 +63,21 @@ public class ProductoService : IProductoService
         return _repo.GetAll().Select(p => MapToDto(p)).ToList();
     }
 
+    public List<ProductoResponseDto> GetBajoStock(int umbral)
+    {
+        return _repo.GetBajoStock(umbral).Select(p => MapToDto(p)).ToList();
+    }
+
+    public List<ProductoResponseDto> GetByCategoria(Guid categoriaId)
+    {
+        return _repo.GetByCategoria(categoriaId).Select(p => MapToDto(p)).ToList();
+    }
+
+    public List<ProductoResponseDto> GetByDisponibilidad(EstadoProducto estado)
+    {
+        return _repo.GetByDisponibilidad(estado).Select(p => MapToDto(p)).ToList();
+    }
+
     public ProductoResponseDto? GetById(Guid id)
     {
         var producto = _repo.GetById(id);

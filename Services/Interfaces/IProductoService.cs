@@ -9,5 +9,8 @@ namespace ProyectoInventario.services
         void Delete(Guid id);
         ProductoResponseDto? GetById(Guid id);
         List<ProductoResponseDto> GetAll();
+        List<ProductoResponseDto> GetByCategoria(Guid categoriaId);
+        List<ProductoResponseDto> GetByDisponibilidad(EstadoProducto estado);
+        List<ProductoResponseDto> GetBajoStock(int umbral);
     }
 }

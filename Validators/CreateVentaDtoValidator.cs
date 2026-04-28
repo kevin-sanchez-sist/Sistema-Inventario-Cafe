@@ -4,10 +4,6 @@ public class CreateVentaDtoValidator : AbstractValidator<CreateVentaDto>
 {
     public CreateVentaDtoValidator()
     {
-        RuleFor(x => x.VendedorId)
-            .NotNull()
-            .WithMessage("El vendedor es obligatorio.");
-
         RuleFor(x => x.Items)
             .NotNull()
             .WithMessage("La venta debe tener al menos un producto.");
