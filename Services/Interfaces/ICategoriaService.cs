@@ -8,5 +8,6 @@ namespace ProyectoInventario.services
         void Delete(Guid id);
         List<CategoriaResponseDto> GetAll();
         CategoriaDetalleResponseDto GetByIdConProductos(Guid id);
+        void AsociarProducto(Guid categoriaId, Guid productoId);
     }
 }

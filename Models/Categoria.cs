@@ -28,6 +28,10 @@ namespace ProyectoInventario.models
         {
             productos.Add(producto);
         }
+        public void RemoverProducto(Producto producto)
+        {
+            productos.Remove(producto);
+        }
 
         public int ContarProductosActivos()
         {

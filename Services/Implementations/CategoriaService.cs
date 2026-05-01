@@ -5,10 +5,12 @@ using ProyectoInventario.services;
 public class CategoriaService : ICategoriaService
 {
     private readonly ICategoriaRepository _repo;
+    private readonly IProductoRepository _productoRepo;
 
-    public CategoriaService(ICategoriaRepository repo)
+    public CategoriaService(ICategoriaRepository repo, IProductoRepository productoRepo)
     {
         _repo = repo;
+        _productoRepo = productoRepo;
     }
 
     //Crear una nueva categoria
@@ -38,6 +40,38 @@ public class CategoriaService : ICategoriaService
         return _repo.GetAll().Select(c => MapToDto(c)).ToList();
     }
 
+
+    public void AsociarProducto(Guid categoriaId, Guid productoId)
+    {
+        //busco la categoria
+        var categoria = _repo.GetById(categoriaId);
+        if (categoria == null)
+            throw new KeyNotFoundException("Categoria no encontrada");
+        
+        //busco el producto
+        var producto = _productoRepo.GetById(productoId);
+        if (producto == null)
+            throw new KeyNotFoundException("Producto no encontrado");
+
+        //si el producto estaba en otra categoria lo elimino
+        if (producto.Categoria != null)
+        {
+            var categoriaAnterior = _repo.GetById(producto.Categoria.Id);
+            categoriaAnterior?.RemoverProducto(producto);
+            _repo.Update(categoriaAnterior!);
+        }
+
+        //asigno la categoria al producto
+        producto.AsignarCategoria(categoria);
+        //agrego el producto a la categoria
+        categoria.AgregarProducto(producto);
+
+
+        //actualizo ambos repositorios
+        _repo.Update(categoria);
+        _productoRepo.Update(producto);
+    }
+
     public CategoriaDetalleResponseDto GetByIdConProductos(Guid id)
     {
         var categoria = _repo.GetById(id);
@@ -54,7 +88,7 @@ public class CategoriaService : ICategoriaService
                 CostoPromedio = p.CostoPromedio,
                 Stock = p.Stock,
                 Estado = p.Estado,
-                CategoriaNombre = categoria.Nombre
+                CategoriaNombre = p.Categoria?.Nombre
             };
 
             if (p is ProductoCafe cafe)

@@ -98,6 +98,16 @@ public class ProductoService : IProductoService
         
         if (dto.Estado.HasValue)
             producto.ActualizarEstado(dto.Estado.Value);
+
+        if (dto.CategoriaId.HasValue)
+        {
+            if (producto.Categoria != null)
+                producto.Categoria.RemoverProducto(producto);
+                
+            var newCategoria = _categoriaRepo.GetById(dto.CategoriaId.Value);
+            producto.AsignarCategoria(newCategoria!);
+            newCategoria!.AgregarProducto(producto);
+        }
         
         if (dto.Stock.HasValue)
         {
