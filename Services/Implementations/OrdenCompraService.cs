@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using ProyectoInventario.models;
 using ProyectoInventario.repositories;
 using ProyectoInventario.services;
+using Mapster;
 
 public class OrdenCompraService : IOrdenCompraService
 {
@@ -53,7 +54,7 @@ public class OrdenCompraService : IOrdenCompraService
 
     public List<OrdenCompraResponseDto> GetAll()
     {
-        return _repo.GetAll().Select(o => MapToDto(o)).ToList();
+        return _repo.GetAll().Adapt<List<OrdenCompraResponseDto>>();
     }
 
     public OrdenCompraResponseDto GetById(Guid id)
@@ -62,17 +63,17 @@ public class OrdenCompraService : IOrdenCompraService
         if (orden == null)
             throw new KeyNotFoundException("Orden de compra no encontrada.");
         
-        return MapToDto(orden);
+        return orden.Adapt<OrdenCompraResponseDto>();
     }
 
     public List<OrdenCompraResponseDto> GetByRangoFechas(DateTime inicio, DateTime fin)
     {
-        return _repo.GetByRangoFechas(inicio,fin).Select(o => MapToDto(o)).ToList();
+        return _repo.GetByRangoFechas(inicio,fin).Adapt<List<OrdenCompraResponseDto>>();
     }
 
     public List<OrdenCompraResponseDto> GetByStatus(EstadoOrden estado)
     {
-        return _repo.GetByStatus(estado).Select(o => MapToDto(o)).ToList();
+        return _repo.GetByStatus(estado).Adapt<List<OrdenCompraResponseDto>>();
     }
 
     public void RecibirOrden(Guid id)
@@ -104,25 +105,5 @@ public class OrdenCompraService : IOrdenCompraService
             _productoRepo.Update(detalle.Producto);
         }
         _repo.Update(orden);
-    }
-
-    private OrdenCompraResponseDto MapToDto(OrdenCompra orden)
-    {
-        return new OrdenCompraResponseDto
-        {
-            Id =orden.Id,
-            NombreProveedor = orden.Proveedor.Nombre,
-            Fecha = orden.Fecha,
-            Estado = orden.Estado,
-            Total = orden.CalcularTotal(),
-            Items = orden.Detalles.Select(d => new DetalleOrdenCompraResponseDto
-            {
-                NombreProducto = d.Producto.Nombre,
-                Cantidad = d.Cantidad,
-                CostoUnitario = d.CostoUnitario,
-                Subtotal = d.CostoUnitario * d.Cantidad
-
-            }).ToList()
-        };
     }
 }

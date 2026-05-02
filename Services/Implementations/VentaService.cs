@@ -1,3 +1,4 @@
+using Mapster;
 using ProyectoInventario.models;
 using ProyectoInventario.repositories;
 using ProyectoInventario.services;
@@ -38,7 +39,7 @@ public class VentaService : IVentaService
             var detalleVenta = new DetalleVenta(producto, venta, item.Cantidad!.Value);
             venta.AgregarDetalle(detalleVenta);
 
-            var movimiento = new Inventario( 
+            var movimiento = new Inventario(
                 producto,
                 TipoMovimiento.Salida,
                 OrigenMovimiento.Venta,
@@ -47,41 +48,29 @@ public class VentaService : IVentaService
                 $"Registro de venta {venta.Id}"
             );
             _inventarioRepo.Add(movimiento);
-
             _productoRepo.Update(producto);
         }
-        venta.Completar();
 
+        venta.Completar();
         _repo.Add(venta);
     }
 
-    public List<VentaResponseDto> GetAll()
-    {
-        return _repo.GetAll().Select(v => MapToDto(v)).ToList();
-    }
+    public List<VentaResponseDto> GetAll() =>
+        _repo.GetAll().Adapt<List<VentaResponseDto>>();
 
     public VentaResponseDto GetById(Guid id)
     {
         var venta = _repo.GetById(id);
         if (venta == null)
-            throw new KeyNotFoundException("No se encontró una venta con ese id");
-
-        return MapToDto(venta);
+            throw new KeyNotFoundException("No se encontró una venta con ese id.");
+        return venta.Adapt<VentaResponseDto>();
     }
 
-    public List<VentaResponseDto> GetByRangoFechas(DateTime inicio, DateTime fin)
-    {
-        return _repo.GetByRangoFechas(inicio, fin)
-            .Select(v => MapToDto(v))
-            .ToList();
-    }
+    public List<VentaResponseDto> GetByRangoFechas(DateTime inicio, DateTime fin) =>
+        _repo.GetByRangoFechas(inicio, fin).Adapt<List<VentaResponseDto>>();
 
-    public List<VentaResponseDto> GetByStatus(EstadoVenta estado)
-    {
-        return _repo.GetByStatus(estado)
-            .Select(v => MapToDto(v))
-            .ToList();
-    }
+    public List<VentaResponseDto> GetByStatus(EstadoVenta estado) =>
+        _repo.GetByStatus(estado).Adapt<List<VentaResponseDto>>();
 
     public void Cancelar(Guid id)
     {
@@ -105,31 +94,10 @@ public class VentaService : IVentaService
                 $"Devolución por cancelación de venta {venta.Id}"
             );
             _inventarioRepo.Add(movimiento);
-
             _productoRepo.Update(detalle.Producto);
         }
 
         venta.Cancelar();
         _repo.Update(venta);
-    }
-
-    private VentaResponseDto MapToDto(Venta venta)
-    {
-        return new VentaResponseDto
-        {
-            Fecha = venta.Fecha,
-            Vendedor = venta.Vendedor.Nombre,
-            Estado = venta.Estado,
-            Total = venta.Total,
-            Items = venta.Detalles.Select(d => new DetalleVentaResponseDto
-            {
-                VentaId = venta.Id,
-                FechaVenta = venta.Fecha,
-                NombreProducto = d.Producto.Nombre,
-                Cantidad = d.Cantidad,
-                PrecioUnitario = d.PrecioUnitario,
-                Subtotal = d.Subtotal
-            }).ToList()
-        };
     }
 }

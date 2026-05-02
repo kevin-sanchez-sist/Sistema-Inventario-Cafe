@@ -1,6 +1,7 @@
 using ProyectoInventario.models;
 using ProyectoInventario.repositories;
 using ProyectoInventario.services;
+using Mapster;
 
 public class CategoriaService : ICategoriaService
 {
@@ -35,10 +36,8 @@ public class CategoriaService : ICategoriaService
         _repo.Delete(id);
     }
 
-    public List<CategoriaResponseDto> GetAll()
-    {
-        return _repo.GetAll().Select(c => MapToDto(c)).ToList();
-    }
+    public List<CategoriaResponseDto> GetAll() =>
+        _repo.GetAll().Adapt<List<CategoriaResponseDto>>();
 
 
     public void AsociarProducto(Guid categoriaId, Guid productoId)
@@ -77,50 +76,7 @@ public class CategoriaService : ICategoriaService
         var categoria = _repo.GetById(id);
         if (categoria == null)
             throw new KeyNotFoundException("Categoría no encontrada.");
-        
-        var productos = categoria.Productos.Select( p =>
-        {
-            var productoDto = new ProductoResponseDto
-            {
-                Id = p.Id,
-                Nombre = p.Nombre,
-                Precio = p.Precio,
-                CostoPromedio = p.CostoPromedio,
-                Stock = p.Stock,
-                Estado = p.Estado,
-                CategoriaNombre = p.Categoria?.Nombre
-            };
 
-            if (p is ProductoCafe cafe)
-            {
-                productoDto.Tipo = TipoProducto.ProductoCafe;
-                productoDto.Variante = cafe.Variante;
-                productoDto.EsMolido = cafe.EsMolido;
-            }
-            else if (p is ProductoDulce dulce)
-            {
-                productoDto.Tipo = TipoProducto.ProductoDulce;
-                productoDto.Sabor = dulce.Sabor;
-            }
-
-            return productoDto;
-        }).ToList();
-        
-        return new CategoriaDetalleResponseDto
-        {
-            Id = categoria.Id,
-            Nombre = categoria.Nombre,
-            Productos = productos
-        };
-    }
-
-    private CategoriaResponseDto MapToDto(Categoria categoria)
-    {
-        return new CategoriaResponseDto
-        {
-            Id = categoria.Id,
-            Nombre = categoria.Nombre,
-            ProductosActivos = categoria.ContarProductosActivos()
-        };
+        return categoria.Adapt<CategoriaDetalleResponseDto>();
     }
 }

@@ -1,6 +1,7 @@
 using ProyectoInventario.models;
 using ProyectoInventario.repositories;
 using ProyectoInventario.services;
+using Mapster;
 
 public class ProductoService : IProductoService
 {
@@ -58,33 +59,24 @@ public class ProductoService : IProductoService
         _repo.Delete(id);
     }
 
-    public List<ProductoResponseDto> GetAll()
-    {
-        return _repo.GetAll().Select(p => MapToDto(p)).ToList();
-    }
+    public List<ProductoResponseDto> GetAll() =>
+        _repo.GetAll().Adapt<List<ProductoResponseDto>>();
 
-    public List<ProductoResponseDto> GetBajoStock(int umbral)
-    {
-        return _repo.GetBajoStock(umbral).Select(p => MapToDto(p)).ToList();
-    }
+    public List<ProductoResponseDto> GetBajoStock(int umbral) =>
+        _repo.GetBajoStock(umbral).Adapt<List<ProductoResponseDto>>();
 
-    public List<ProductoResponseDto> GetByCategoria(Guid categoriaId)
-    {
-        return _repo.GetByCategoria(categoriaId).Select(p => MapToDto(p)).ToList();
-    }
+    public List<ProductoResponseDto> GetByCategoria(Guid categoriaId) =>
+        _repo.GetByCategoria(categoriaId).Adapt<List<ProductoResponseDto>>();
 
-    public List<ProductoResponseDto> GetByDisponibilidad(EstadoProducto estado)
-    {
-        return _repo.GetByDisponibilidad(estado).Select(p => MapToDto(p)).ToList();
-    }
+    public List<ProductoResponseDto> GetByDisponibilidad(EstadoProducto estado) =>
+        _repo.GetByDisponibilidad(estado).Adapt<List<ProductoResponseDto>>();
 
     public ProductoResponseDto? GetById(Guid id)
     {
         var producto = _repo.GetById(id);
         if (producto == null)
-            throw new KeyNotFoundException("NO se ha encontrado un producto con ese id.");
-
-        return MapToDto(producto);
+            throw new KeyNotFoundException("No se ha encontrado un producto con ese id.");
+        return producto.Adapt<ProductoResponseDto>();
     }
 
     public void Update(Guid id, UpdateProductoDto dto)
@@ -145,34 +137,5 @@ public class ProductoService : IProductoService
         }
 
         _repo.Update(producto);
-    }
-
-    private ProductoResponseDto MapToDto(Producto producto)
-    {
-        var dto = new ProductoResponseDto
-        {
-            Id = producto.Id,
-            Nombre = producto.Nombre,
-            Precio = producto.Precio,
-            CostoPromedio = producto.CostoPromedio,
-            Stock = producto.Stock,
-            Estado = producto.Estado,
-            CategoriaNombre = producto.Categoria?.Nombre
-        };
-
-        if (producto is ProductoCafe cafe)
-        {
-            dto.Tipo = TipoProducto.ProductoCafe;
-            dto.Variante = cafe.Variante;
-            dto.EsMolido = cafe.EsMolido;
-        }
-        else if (producto is ProductoDulce dulce)
-        {
-            dto.Tipo = TipoProducto.ProductoDulce;
-            dto.Sabor = dulce.Sabor;
-        }
-
-
-        return dto;
     }
 }

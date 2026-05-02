@@ -6,6 +6,7 @@ namespace ProyectoInventario.models
         private string email;
         private string password;
         private RolUsuario rol;
+        private bool activo;
 
         public Usuario(string nombre, string email, string password, RolUsuario rol)
         {
@@ -13,6 +14,7 @@ namespace ProyectoInventario.models
             this.email = email;
             this.password = password;
             this.rol = rol;
+            this.activo = true;
         }
 
         public void ActualizarInformacion(string? email, string? password)
@@ -20,6 +22,8 @@ namespace ProyectoInventario.models
             if (email != null) this.email = email;
             if (password != null) this.password = password;
         }
+
+        public void Desactivar() => activo = false;
 
         public string Nombre
         {
@@ -39,6 +43,11 @@ namespace ProyectoInventario.models
         public RolUsuario Rol
         {
             get { return rol; }
+        }
+
+        public bool Activo
+        {
+            get { return activo; }
         }
     }
 }

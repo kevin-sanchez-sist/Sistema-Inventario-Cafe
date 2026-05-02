@@ -1,6 +1,7 @@
 using ProyectoInventario.models;
 using ProyectoInventario.repositories;
 using ProyectoInventario.services;
+using Mapster;
 
 public class UsuarioService : IUsuarioService
 {
@@ -27,14 +28,16 @@ public class UsuarioService : IUsuarioService
         var usuario = _repo.GetById(id);
         if (usuario == null)
             throw new KeyNotFoundException("Usuario no encontrado.");
-        
-        _repo.Delete(id);
+
+        if (!usuario.Activo)
+            throw new InvalidOperationException("El usuario ya está desactivado.");
+
+        usuario.Desactivar();
+        _repo.Update(usuario);
     }
 
-    public List<UsuarioResponseDto> GetAll()
-    {
-        return _repo.GetAll().Select(u => MapToDto(u)).ToList();
-    }
+    public List<UsuarioResponseDto> GetAll() =>
+        _repo.GetAll().Where(u => u.Activo).Adapt<List<UsuarioResponseDto>>();
 
     public UsuarioResponseDto GetById(Guid id)
     {
@@ -42,7 +45,7 @@ public class UsuarioService : IUsuarioService
         if (usuario == null)
             throw new KeyNotFoundException("Usuario no encontrado.");
         
-        return MapToDto(usuario);
+        return usuario.Adapt<UsuarioResponseDto>();
     }
 
     public void Update(Guid id, UpdateUsuarioDto usuario)
@@ -53,15 +56,5 @@ public class UsuarioService : IUsuarioService
 
         usuario1.ActualizarInformacion(usuario.Email, usuario.Password);
         _repo.Update(usuario1);
-    }
-
-    private UsuarioResponseDto MapToDto(Usuario usuario)
-    {
-        return new UsuarioResponseDto
-        {
-          Nombre = usuario.Nombre,
-          Email = usuario.Email,
-          Rol = usuario.Rol  
-        };
     }
 }

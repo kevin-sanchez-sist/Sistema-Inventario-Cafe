@@ -1,6 +1,7 @@
 using ProyectoInventario.models;
 using ProyectoInventario.repositories;
 using ProyectoInventario.services;
+using Mapster;
 
 public class ProveedorService : IProveedorService
 {
@@ -53,25 +54,10 @@ public class ProveedorService : IProveedorService
         if (proveedor == null)
             throw new KeyNotFoundException("Proveedor no encontrado.");
 
-        return MapToDto(proveedor);
+        return proveedor.Adapt<ProveedorResponseDto>();
     }
 
-    public List<ProveedorResponseDto> GetAll()
-    {
-        return _repo.GetAll()
-            .Select(p => MapToDto(p))
-            .ToList();
-    }
+    public List<ProveedorResponseDto> GetAll() =>
+        _repo.Adapt<List<ProveedorResponseDto>>();
 
-    private ProveedorResponseDto MapToDto(Proveedor proveedor)
-    {
-        return new ProveedorResponseDto
-        {
-            Id = proveedor.Id,
-            Nombre = proveedor.Nombre,
-            Telefono = proveedor.Telefono,
-            Email = proveedor.Email,
-            Ciudad = proveedor.Ciudad
-        };
-    }
 }
