@@ -82,7 +82,7 @@ public static class SeedData
         var admin = new Usuario(
             nombre: "Admin Principal",
             email: "admin@cafe.com",
-            password: "Admin123",
+            password: BCrypt.Net.BCrypt.HashPassword("Admin123"),
             rol: RolUsuario.Admin
         );
 

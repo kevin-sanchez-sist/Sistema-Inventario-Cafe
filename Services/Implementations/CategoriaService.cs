@@ -32,6 +32,13 @@ public class CategoriaService : ICategoriaService
         var categoria = _repo.GetById(id);
         if (categoria == null)
             throw new KeyNotFoundException("Categoria no encontrada.");
+        
+        // Limpiar la referencia en cada producto asociado
+        foreach (var producto in categoria.Productos)
+        {
+            producto.AsignarCategoria(null!);
+            _productoRepo.Update(producto);
+        }
 
         _repo.Delete(id);
     }

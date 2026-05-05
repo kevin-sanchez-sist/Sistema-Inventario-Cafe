@@ -44,3 +44,6 @@ C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\Micr
 C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
 C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\Mapster.dll
+C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\Mapster.Core.dll
+C:\Copia de seguridad\Programación C#\ProyectoInventario\bin\Debug\net10.0\BCrypt.Net-Next.dll

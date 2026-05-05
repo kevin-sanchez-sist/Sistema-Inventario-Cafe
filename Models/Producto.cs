@@ -79,7 +79,7 @@ namespace ProyectoInventario.models
             costoPromedio = ((stock * costoPromedio) + (cantidadEntrante * costoNuevo)) / (stock + cantidadEntrante);
         }
 
-        public void AsignarCategoria(Categoria categoria)
+        public void AsignarCategoria(Categoria? categoria)
         {            
             this.categoria = categoria;
         }

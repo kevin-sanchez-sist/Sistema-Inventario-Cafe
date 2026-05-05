@@ -20,11 +20,12 @@ public class AuthService : IAuthService
     public TokenResponseDto Login(LoginDto dto)
     {
         var usuario = _repo.GetByEmail(dto.Email!);
-        if (usuario == null || !usuario.Activo || usuario.Password != dto.Password)
+        if (usuario == null || !usuario.Activo || !BCrypt.Net.BCrypt.Verify(dto.Password, usuario.Password))
             throw new UnauthorizedAccessException("Credenciales incorrectas.");
         
         var token = GenerarToken(usuario);
 
+        //
         return new TokenResponseDto
         {
             Token = token,

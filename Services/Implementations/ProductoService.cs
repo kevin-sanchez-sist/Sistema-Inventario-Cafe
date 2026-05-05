@@ -56,11 +56,12 @@ public class ProductoService : IProductoService
         if (producto == null)
             throw new KeyNotFoundException("Producto no encontrado");
         
-        _repo.Delete(id);
+        producto.ActualizarEstado(EstadoProducto.Inactivo);
+        _repo.Update(producto);
     }
 
     public List<ProductoResponseDto> GetAll() =>
-        _repo.GetAll().Adapt<List<ProductoResponseDto>>();
+        _repo.GetAll().Where(p => p.Estado == EstadoProducto.Activo).Adapt<List<ProductoResponseDto>>();
 
     public List<ProductoResponseDto> GetBajoStock(int umbral) =>
         _repo.GetBajoStock(umbral).Adapt<List<ProductoResponseDto>>();

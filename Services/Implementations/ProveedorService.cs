@@ -58,6 +58,6 @@ public class ProveedorService : IProveedorService
     }
 
     public List<ProveedorResponseDto> GetAll() =>
-        _repo.Adapt<List<ProveedorResponseDto>>();
+        _repo.GetAll().Adapt<List<ProveedorResponseDto>>();
 
 }

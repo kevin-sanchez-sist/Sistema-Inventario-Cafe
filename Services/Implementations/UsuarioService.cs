@@ -18,7 +18,12 @@ public class UsuarioService : IUsuarioService
         if (existe)
             throw new InvalidOperationException("Ya existe un usuario con ese email.");
         
-        var usuario = new Usuario(usuarioDto.Nombre!, usuarioDto.Email!, usuarioDto.Password!, usuarioDto.Rol);
+        var usuario = new Usuario(
+            usuarioDto.Nombre!, 
+            usuarioDto.Email!, 
+            BCrypt.Net.BCrypt.HashPassword(usuarioDto.Password!),  // aquí
+            usuarioDto.Rol
+        );
 
         _repo.Add(usuario);
     }
