@@ -46,10 +46,11 @@ public class OrdenCompraService : IOrdenCompraService
         if (orden == null)
             throw new KeyNotFoundException("Orden de compra no encontrada.");
         
-        if (orden.Estado == EstadoOrden.Recibida)
-            throw new InvalidOperationException("No se puede eliminar una orden ya recibida.");
+        bool exito = orden.Cancelar();
+        if (!exito)
+            throw new InvalidOperationException("No se puede cancelar una orden que no está pendiente.");
         
-        _repo.Delete(id);
+        _repo.Update(orden);
     }
 
     public List<OrdenCompraResponseDto> GetAll()

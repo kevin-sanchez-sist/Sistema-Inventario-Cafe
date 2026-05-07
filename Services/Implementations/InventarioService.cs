@@ -22,11 +22,6 @@ public class InventarioService : IInventarioService
         return _repo.GetByProducto(productoId).Adapt<List<InventarioResponseDto>>();
     }
 
-    public List<InventarioResponseDto> GetByOrigen(OrigenMovimiento origen)
-    {
-        return _repo.GetByOrigen(origen).Adapt<List<InventarioResponseDto>>();
-    }
-
     public List<InventarioResponseDto> GetByTipo(TipoMovimiento tipo)
     {
         return _repo.GetByTipo(tipo).Adapt<List<InventarioResponseDto>>();

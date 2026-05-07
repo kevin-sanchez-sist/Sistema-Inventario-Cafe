@@ -12,6 +12,7 @@ public static class MappingConfig
             .Map(dest => dest.Variante, src => src is ProductoCafe ? ((ProductoCafe)src).Variante : null)
             .Map(dest => dest.EsMolido, src => src is ProductoCafe ? ((ProductoCafe)src).EsMolido : (bool?)null)
             .Map(dest => dest.Sabor, src => src is ProductoDulce ? ((ProductoDulce)src).Sabor : null);
+            
 
         // ── CATEGORIA ──────────────────────────────────────────────
         TypeAdapterConfig<Categoria, CategoriaResponseDto>.NewConfig()

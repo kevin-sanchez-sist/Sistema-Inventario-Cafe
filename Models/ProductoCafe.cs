@@ -5,7 +5,7 @@ namespace ProyectoInventario.models
         private string variante;
         private bool esMolido;
 
-        public ProductoCafe(string nombre, decimal precio, int stock, string variante, bool esMolido, decimal costo) 
+        public ProductoCafe(string nombre, decimal? precio, int stock, string variante, bool esMolido, decimal costo) 
             : base(nombre, precio, stock, costo)
         {
             this.variante = variante;

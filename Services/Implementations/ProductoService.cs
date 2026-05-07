@@ -19,8 +19,8 @@ public class ProductoService : IProductoService
     public void Add(CreateProductoDto dto)
     {
         Producto producto = dto.Tipo == TipoProducto.ProductoCafe
-        ? new ProductoCafe(dto.Nombre!, dto.Precio!.Value, dto.Stock!.Value, dto.Variante!, dto.EsMolido!.Value, dto.CostoInicial!.Value)
-        : new ProductoDulce(dto.Nombre!, dto.Precio!.Value, dto.Stock!.Value, dto.Sabor!, dto.CostoInicial!.Value);
+        ? new ProductoCafe(dto.Nombre!, dto.Precio, dto.Stock!.Value, dto.Variante!, dto.EsMolido!.Value, dto.CostoInicial!.Value)
+        : new ProductoDulce(dto.Nombre!, dto.Precio, dto.Stock!.Value, dto.Sabor!, dto.CostoInicial!.Value);
 
         if (dto.CategoriaId.HasValue)
         {

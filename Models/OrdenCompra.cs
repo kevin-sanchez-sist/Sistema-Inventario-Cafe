@@ -47,6 +47,15 @@ namespace ProyectoInventario.models
             return true;
         }
 
+        public bool Cancelar()
+        {
+            if (estado != EstadoOrden.Pendiente) 
+                return false;
+                
+            estado = EstadoOrden.Cancelada;
+            return true;
+        }
+
         public decimal CalcularTotal()
         {
             decimal total = 0;
